@@ -11,10 +11,10 @@
 		<script src="OrbitControls.js"></script>
 		<script>
 			const fov = 60;
-		  const aspect = 2;  // the canvas default
-		  const near = 0.1;
-		  const far = 1000;
-		  const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+		    const aspect = 2;  // the canvas default
+		    const near = 0.1;
+		    const far = 1000;
+		    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 			camera.position.z = 70;
 
 			var radius = 7;
@@ -25,10 +25,10 @@
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth, window.innerHeight);
 			renderer.gammaInput = true;
-      renderer.gammaOutput = true;
+      		renderer.gammaOutput = true;
 			document.body.appendChild( renderer.domElement );
 
-    	const scene = new THREE.Scene();
+    		const scene = new THREE.Scene();
 
 			var boxGeometry = new THREE.BoxBufferGeometry(40,40,40);
 			var wireframe = new THREE.WireframeGeometry( boxGeometry );
@@ -111,116 +111,116 @@
 
 			var clock = new THREE.Clock();
 			var animate = function () {
-				dt = clock.getDelta();
+			dt = clock.getDelta();
 
-				requestAnimationFrame( animate );
+			requestAnimationFrame( animate );
 
-        for (var i = 0; i < particleCount; i++) {
-						particles[i].age += dt;
-						console.log(particles[i].age);
-						if(particles[i].age >=lifeTime){
-							particles[i].position.x = Math.random();
-							particles[i].position.y = 20;
-							particles[i].position.z = Math.random()+5;
-							particles[i].velocity = new THREE.Vector3(Math.random()*10-5,Math.random()*20+20,Math.random()*10-5);
-							particles[i].age = 0;
-						}
+        	for (var i = 0; i < particleCount; i++) {
+				particles[i].age += dt;
+				//console.log(particles[i].age);
+				if(particles[i].age >=lifeTime){
+					particles[i].position.x = Math.random();
+					particles[i].position.y = 20;
+					particles[i].position.z = Math.random()+5;
+					particles[i].velocity = new THREE.Vector3(Math.random()*10-5,Math.random()*20+20,Math.random()*10-5);
+					particles[i].age = 0;
+				}
 
-						var prevPos = new THREE.Vector3(particles[i].position.x, particles[i].position.y, particles[i].position.z);
-						var prevVel = new THREE.Vector3(particles[i].velocity.x, particles[i].velocity.y, particles[i].velocity.z);
+				var prevPos = new THREE.Vector3(particles[i].position.x, particles[i].position.y, particles[i].position.z);
+				var prevVel = new THREE.Vector3(particles[i].velocity.x, particles[i].velocity.y, particles[i].velocity.z);
 
-						console.log(particles[i].velocity.y);
-						particles[i].velocity.y += gravity*dt;
-						console.log(particles[i].velocity.y);
+				console.log(particles[i].velocity.y);
+				particles[i].velocity.y += gravity*dt;
+				console.log(particles[i].velocity.y);
 
-            particles[i].position.x += dt*particles[i].velocity.x;
-            particles[i].position.y += dt*particles[i].velocity.y;
-						particles[i].position.z += dt*particles[i].velocity.z;
+	            particles[i].position.x += dt*particles[i].velocity.x;
+	            particles[i].position.y += dt*particles[i].velocity.y;
+				particles[i].position.z += dt*particles[i].velocity.z;
 
-						var temp = new THREE.Vector3(particles[i].position.x-sphere.position.x, particles[i].position.y-sphere.position.y, particles[i].position.z-sphere.position.z);
+				var temp = new THREE.Vector3(particles[i].position.x-sphere.position.x, particles[i].position.y-sphere.position.y, particles[i].position.z-sphere.position.z);
 
-						if( temp.dot(temp) <= radius*radius){
+				if( temp.dot(temp) <= radius*radius){
 
-							var sphereDotSphere = sphere.position.dot(sphere.position);
-							var prevPosDotPrevPos = prevPos.dot(prevPos);
+					var sphereDotSphere = sphere.position.dot(sphere.position);
+					var prevPosDotPrevPos = prevPos.dot(prevPos);
 
-							var alphaTemp = new THREE.Vector3(particles[i].position.x-prevPos.x, particles[i].position.y-prevPos.y, particles[i].position.z-prevPos.z)
-							var alpha = alphaTemp.dot(alphaTemp);
+					var alphaTemp = new THREE.Vector3(particles[i].position.x-prevPos.x, particles[i].position.y-prevPos.y, particles[i].position.z-prevPos.z)
+					var alpha = alphaTemp.dot(alphaTemp);
 
-							var delta = new THREE.Vector3(prevPos.x - sphere.position.x, prevPos.y -sphere.position.y, prevPos.x - sphere.position.z);
-							var beta = 2*alphaTemp.dot(delta);
+					var delta = new THREE.Vector3(prevPos.x - sphere.position.x, prevPos.y -sphere.position.y, prevPos.x - sphere.position.z);
+					var beta = 2*alphaTemp.dot(delta);
 
-							var gamma = sphereDotSphere + prevPosDotPrevPos - (2*prevPos.dot(sphere.position)) - radius*radius;
+					var gamma = sphereDotSphere + prevPosDotPrevPos - (2*prevPos.dot(sphere.position)) - radius*radius;
 
-							lambda1 = (-beta + Math.sqrt(beta*beta - 4*alpha*gamma))/(2*alpha);
-							lambda2 = (-beta - Math.sqrt(beta*beta - 4*alpha*gamma))/(2*alpha);
+					lambda1 = (-beta + Math.sqrt(beta*beta - 4*alpha*gamma))/(2*alpha);
+					lambda2 = (-beta - Math.sqrt(beta*beta - 4*alpha*gamma))/(2*alpha);
 
-							var lambda;
-							if (lambda1 <= 1 && lambda1 >= 0 &&lambda2 <= 1 && lambda2 >= 0 ){
-								lambda = Math.min(lambda1,lambda2);
-							}
-							else if (lambda1 <= 1 && lambda1 >= 0  ){
-								lambda = lambda1;
-							}
-							else if(lambda2 <= 1 && lambda2 >= 0){
-								lambda = lambda2;
-							}
+					var lambda;
+					if (lambda1 <= 1 && lambda1 >= 0 &&lambda2 <= 1 && lambda2 >= 0 ){
+						lambda = Math.min(lambda1,lambda2);
+					}
+					else if (lambda1 <= 1 && lambda1 >= 0  ){
+						lambda = lambda1;
+					}
+					else if(lambda2 <= 1 && lambda2 >= 0){
+						lambda = lambda2;
+					}
 
-							var contactPoint = new THREE.Vector3(prevPos.x+lambda*(alphaTemp.x), prevPos.y+lambda*(alphaTemp.y), prevPos.z+lambda*(alphaTemp.z));
-							var normal = new THREE.Vector3(contactPoint.x - sphere.position.x, contactPoint.y - sphere.position.y, contactPoint.z - sphere.position.z);
-							normal.normalize();
-							var d = -(normal.dot(contactPoint));
-							planeCol(normal, contactPoint, particles[i].position, particles[i].velocity);
+					var contactPoint = new THREE.Vector3(prevPos.x+lambda*(alphaTemp.x), prevPos.y+lambda*(alphaTemp.y), prevPos.z+lambda*(alphaTemp.z));
+					var normal = new THREE.Vector3(contactPoint.x - sphere.position.x, contactPoint.y - sphere.position.y, contactPoint.z - sphere.position.z);
+					normal.normalize();
+					var d = -(normal.dot(contactPoint));
+					planeCol(normal, contactPoint, particles[i].position, particles[i].velocity);
 
-						}
+				}
 
-						var tri1 = new THREE.Triangle(particles[i].position,v2,v3);
-						var tri2 = new THREE.Triangle(v1,particles[i].position,v3);
-						var tri3 = new THREE.Triangle(v1,v2,particles[i].position);
+				var tri1 = new THREE.Triangle(particles[i].position,v2,v3);
+				var tri2 = new THREE.Triangle(v1,particles[i].position,v3);
+				var tri3 = new THREE.Triangle(v1,v2,particles[i].position);
 
-						var area1 = tri1.getArea();
-						var area2 = tri2.getArea();
-						var area3 = tri3.getArea();
+				var area1 = tri1.getArea();
+				var area2 = tri2.getArea();
+				var area3 = tri3.getArea();
 
-		  			//check if it collides with the triangle
-						var margin = 5;
-						if(area1 + area2 + area3 <= areaTri+margin){
-							planeCol(triNormal,particles[i].position, particles[i].position, particles[i].velocity);
-						}
+  				//check if it collides with the triangle
+				var margin = 5;
+				if(area1 + area2 + area3 <= areaTri+margin){
+					planeCol(triNormal,particles[i].position, particles[i].position, particles[i].velocity);
+				}
 
-            if (particles[i].position.y <= -20) {
-							var normal_ = new THREE.Vector3(0,1,0);
-							planeCol(normal_, new THREE.Vector3(0,-20,0), particles[i].position, particles[i].velocity);
-            }
-						if (particles[i].position.x <= -20) {
-							var normal_ = new THREE.Vector3(1,0,0);
-							planeCol(normal_, new THREE.Vector3(-20,0,0), particles[i].position, particles[i].velocity);
-            }
-						if (particles[i].position.x >= 20) {
-							var normal_ = new THREE.Vector3(-1,0,0);
-							planeCol(normal_, new THREE.Vector3(20,0,0), particles[i].position, particles[i].velocity);
-            }
-						if (particles[i].position.z <= -20) {
-							var normal_ = new THREE.Vector3(0,0,1);
-							planeCol(normal_, new THREE.Vector3(0,0,-20), particles[i].position, particles[i].velocity);
-            }
-						if (particles[i].position.z >= 20) {
-							var normal_ = new THREE.Vector3(0,0,-1);
-							planeCol(normal_, new THREE.Vector3(0,0,20), particles[i].position, particles[i].velocity);
-            }
+	            if (particles[i].position.y <= -20) {
+					var normal_ = new THREE.Vector3(0,1,0);
+					planeCol(normal_, new THREE.Vector3(0,-20,0), particles[i].position, particles[i].velocity);
+	            }
+				if (particles[i].position.x <= -20) {
+					var normal_ = new THREE.Vector3(1,0,0);
+					planeCol(normal_, new THREE.Vector3(-20,0,0), particles[i].position, particles[i].velocity);
+	            }
+				if (particles[i].position.x >= 20) {
+					var normal_ = new THREE.Vector3(-1,0,0);
+					planeCol(normal_, new THREE.Vector3(20,0,0), particles[i].position, particles[i].velocity);
+	            }
+				if (particles[i].position.z <= -20) {
+					var normal_ = new THREE.Vector3(0,0,1);
+					planeCol(normal_, new THREE.Vector3(0,0,-20), particles[i].position, particles[i].velocity);
+	            }
+				if (particles[i].position.z >= 20) {
+					var normal_ = new THREE.Vector3(0,0,-1);
+					planeCol(normal_, new THREE.Vector3(0,0,20), particles[i].position, particles[i].velocity);
+	            }
 
-						function planeCol(n, cp, pp, pv){
-							var d = -(n.x*cp.x+n.y*cp.y+n.z*cp.z);
-							var dotProdPos = (n.x*pp.x)+(n.y*pp.y)+(n.z*pp.z);
-							var dotProdVel = (n.x*pv.x)+(n.y*pv.y)+(n.z*pv.z);
+				function planeCol(n, cp, pp, pv){
+					var d = -(n.x*cp.x+n.y*cp.y+n.z*cp.z);
+					var dotProdPos = (n.x*pp.x)+(n.y*pp.y)+(n.z*pp.z);
+					var dotProdVel = (n.x*pv.x)+(n.y*pv.y)+(n.z*pv.z);
 
-							var temp1 = new THREE.Vector3 ((1+damping)*(dotProdPos+d)*n.x, ((1+damping)*(dotProdPos+d))*n.y, ((1+damping)*(dotProdPos+d))*n.z);
-							var temp2 = new THREE.Vector3 ((1+damping)*(dotProdVel)*n.x, ((1+damping)*(dotProdVel))*n.y, ((1+damping)*(dotProdVel))*n.z);
+					var temp1 = new THREE.Vector3 ((1+damping)*(dotProdPos+d)*n.x, ((1+damping)*(dotProdPos+d))*n.y, ((1+damping)*(dotProdPos+d))*n.z);
+					var temp2 = new THREE.Vector3 ((1+damping)*(dotProdVel)*n.x, ((1+damping)*(dotProdVel))*n.y, ((1+damping)*(dotProdVel))*n.z);
 
-							pp.set(pp.x-temp1.x,pp.y-temp1.y ,pp.z-temp1.z);
-							pv.set(pv.x-temp2.x,pv.y-temp2.y ,pv.z-temp2.z);
-						}
-        }
+					pp.set(pp.x-temp1.x,pp.y-temp1.y ,pp.z-temp1.z);
+					pv.set(pv.x-temp2.x,pv.y-temp2.y ,pv.z-temp2.z);
+				}
+        			}
 				renderer.render( scene, camera );
 			};
 
